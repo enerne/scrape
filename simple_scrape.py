@@ -12,4 +12,3 @@ if __name__ == "__main__":
     website = "https://www.cancer.org/"
     print(scrape(website))
 
-# todo: Actually turn this all into a website

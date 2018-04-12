@@ -38,5 +38,3 @@ if __name__ == '__main__':
     pages, errors = scrape_all("https://www.cancer.org/")
     with open("test.json", "w") as test:
         test.write(pages)
-
-# todo: Actually turn this all into a website
