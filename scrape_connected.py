@@ -1,9 +1,9 @@
 import simple_scrape, json, urllib.error
 
 
-def scrape_all(website, json_format=True):
+def scrape_all(website, json_format=True, reqs=["title", "links", "para", "text"]):
     errors = 0
-    main_page = simple_scrape.scrape(website, False)
+    main_page = simple_scrape.scrape(website, False, reqs)
 
     pages = {"main": main_page}
 
@@ -23,7 +23,12 @@ def scrape_all(website, json_format=True):
             errors += 1
         except urllib.error.URLError:
             errors += 1
+        except UnicodeEncodeError:
+            errors += 1
+        except UnicodeDecodeError:
+            errors += 1
 
+    print("Errors:", errors)
     if json_format:
         return json.dumps(pages, indent="\t"), errors
     return pages, errors
@@ -31,6 +36,7 @@ def scrape_all(website, json_format=True):
 
 if __name__ == '__main__':
     pages, errors = scrape_all("https://www.cancer.org/")
-    print("Errors:", errors)
-    with open("test.json","w") as test:
+    with open("test.json", "w") as test:
         test.write(pages)
+
+# todo: Actually turn this all into a website
